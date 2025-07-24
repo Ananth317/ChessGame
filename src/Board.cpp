@@ -1,11 +1,21 @@
-#include "Board.h"
 #include <iostream>
 #include <iomanip>
+#include "Board.h"
+#include "Pawn.h"
 
 Board::Board() {
     grid.resize(8);
     for (auto& row : grid)
         row.resize(8);
+    // Place white pawns
+    for (int col = 0; col < 8; ++col) {
+        grid[6][col] = std::make_unique<Pawn>(Color::WHITE);
+    }
+
+    // Place black pawns
+    for (int col = 0; col < 8; ++col) {
+        grid[1][col] = std::make_unique<Pawn>(Color::BLACK);
+    }
 }
 
 void Board::display() const {
