@@ -39,6 +39,15 @@ const Piece* Board::getPieceAt(const Position& pos) const {
 }
 
 bool Board::movePiece(const Position& from, const Position& to) {
-    // Just a stub for now
-    return false;
+    auto& piece = grid[from.row][from.column];
+    if (!piece) {
+        return false;
+    }
+
+    if(!piece->isValidMove(from, to, *this)) {
+        return false; // Invalid move according to piece rules
+    }
+
+    grid[to.row][to.column] = std::move(piece); // Move the piece
+    return true; // Move successful
 }

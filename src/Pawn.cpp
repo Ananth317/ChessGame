@@ -2,8 +2,8 @@
 #include "Board.h"
 
 bool Pawn::isValidMove(const Position& from, const Position& to, const Board& board) const {
-    int direction = (color == Color::WHITE) ? 1 : -1; // White moves up, Black moves down
-    int startRow = (color == Color::WHITE) ? 1 : 6; // Starting row for pawns
+    int direction = (color == Color::WHITE) ? -1 : 1; // White moves up, Black moves down
+    int startRow = (color == Color::WHITE) ? 6 : 1; // Starting row for pawns
 
     // Move forward by 1
     if (to.column == from.column && to.row == from.row + direction && !board.getPieceAt(to)) {
