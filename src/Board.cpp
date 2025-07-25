@@ -3,7 +3,8 @@
 #include "Board.h"
 #include "Pawn.h"
 
-Board::Board() {
+Board::Board() 
+: currentTurn(Color::WHITE) {
     grid.resize(8);
     for (auto& row : grid)
         row.resize(8);
@@ -40,8 +41,12 @@ const Piece* Board::getPieceAt(const Position& pos) const {
 
 bool Board::movePiece(const Position& from, const Position& to) {
     auto& piece = grid[from.row][from.column];
-    if (!piece) {
+    if(!piece) {
         return false;
+    }
+
+    if(piece->getColor() != currentTurn) {
+        return false; // Not the player's turn
     }
 
     if(!piece->isValidMove(from, to, *this)) {
@@ -49,5 +54,6 @@ bool Board::movePiece(const Position& from, const Position& to) {
     }
 
     grid[to.row][to.column] = std::move(piece); // Move the piece
+    currentTurn = (currentTurn == Color::WHITE) ? Color::BLACK : Color::WHITE; // Switch turns
     return true; // Move successful
 }
